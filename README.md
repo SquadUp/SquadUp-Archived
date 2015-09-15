@@ -1,0 +1,2 @@
+# SquadUp-Server
+SquadUp server
