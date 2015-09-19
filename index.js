@@ -25,6 +25,7 @@ io.on("connection", function(socket) {
     	//push new room object to list
     	rooms.push({
     		id: thisRoomId,
+    		squadName: "default",
     		time: 0,
     		location: 0,
     		leader: this.id,
@@ -67,6 +68,7 @@ io.on("connection", function(socket) {
 			rooms[roomIndex].time = data.time;
 			rooms[roomIndex].location = data.location;
 			rooms[roomIndex].details = data.details;
+			rooms[roomIndex].squadName = data.squadName;
 			console.log(data);
 			io.sockets.in(rooms[roomIndex].id).emit("newEventDetails", rooms[roomIndex]); //emit to all members in room
 		}
@@ -75,12 +77,11 @@ io.on("connection", function(socket) {
     socket.on("updateUserLocation", function (data) { //user updating location (name and location coords/whatever)
     	console.log(data.name + " " + data.location);
     	rooms.forEach(function (x) { //update the user's coordinates for each room it's in
-    		//console.log(x);
     		var userIndex = searchUsersByName(x.users, data.name); 
-    		console.log(userIndex);
     		if (userIndex != -1) { //if user is there
     			x.users[userIndex] = data;
     		}
+    		console.log(x);
     		io.sockets.in(x.id).emit("newEventDetails", x); //emit to all members in room
     	});
     });
