@@ -38,7 +38,7 @@ io.on("connection", function(socket) {
     socket.on("joinRoom", function (data) { //user wishes to join a room (data object has user's name, and room ID)
     	console.log(data);
     	console.log(this.id + " Request to join room " + data.roomID);
-    	roomIndex = searchRooms(data.roomID)
+    	var roomIndex = searchRooms(data.roomID)
     	if (roomIndex != -1) { //so long as the room exists
     		this.join(data.roomID);
     		console.log(this.id + " " + data.name + " joined room " + data.roomID);
@@ -58,7 +58,7 @@ io.on("connection", function(socket) {
     	console.log('validating data');
 		//once data is validated
 		console.log(this.id + " Request to update details " + data.id);
-		roomIndex = searchRooms(data.id)
+		var roomIndex = searchRooms(data.id)
 		console.log(this.id + " " + rooms[roomIndex].leader);
 		if (roomIndex != -1 && this.id === rooms[roomIndex].leader) {
 			//rooms[roomIndex] = data; //set room data to the user's input
@@ -71,6 +71,18 @@ io.on("connection", function(socket) {
 		}
     });
 
+    socket.on("updateUserLocation", function (data) { //user updating location (name and location coords/whatever)
+    	console.log(data.name + " " + data.location);
+    	rooms.forEach(function (x) { //update the user's coordinates for each room it's in
+    		//console.log(x);
+    		var userIndex = searchUsersByName(x.users, data.name); 
+    		console.log(userIndex);
+    		if (userIndex != -1) { //if user is there
+    			x.users[userIndex] = data;
+    		}
+    		io.sockets.in(x.id).emit("newEventDetails", x); //emit to all members in room
+    	});
+    });
 
     socket.on("disconnect", function() {
         console.log("User " + socket.id + " left");
@@ -82,6 +94,15 @@ io.on("connection", function(socket) {
 function searchRooms(id) {
 	for (var i = 0; i < rooms.length; i++) {
 		if (rooms[i].id === id) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+function searchUsersByName(userList, name) {
+	for (var i = 0; i < userList.length; i++) {
+		if (userList[i].name === name) {
 			return i;
 		}
 	}
