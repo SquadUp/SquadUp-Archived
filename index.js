@@ -16,6 +16,20 @@ io.on("connection", function(socket) {
     console.log("User " + socket.id + " has joined.");
     users.push(socket.id);
     console.log(users.length + " users connected");
+
+
+    socket.on("createRoom", function () {
+    	var thisRoomId = Math.floor(Math.random() * 100000);
+    	console.log("new room " + thisRoomId);
+    	socket.emit('newRoom', thisRoomId.toString());
+    });
+
+
+    socket.on("disconnect", function() {
+        console.log("User " + socket.id + " left");
+        users.splice(users.indexOf(socket.id), 1);
+        console.log(users.length + " users connected");
+    });
 });
 
 http.listen((process.env.PORT || 7777), function() {
