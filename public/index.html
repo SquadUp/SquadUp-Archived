@@ -28,7 +28,16 @@
 			document.getElementById('newEventTime').value = newEventDetails.time;
 			document.getElementById('newEventLocation').value = newEventDetails.location;
 			document.getElementById('newEventDetails').value = newEventDetails.details;
+			updateUsers();
 		})
+
+		var updateUsers = function(){
+			for(var i = document.getElementById('users').children.length; i < currentEvent.users.length; i++){
+				var listItem = document.createElement("li");
+				listItem.innerHTML = currentEvent.users[i].name;
+				document.getElementById('users').appendChild(listItem);
+			}
+		}
 
 		var sendName = function(){
 			userName = document.getElementById("name").value;
@@ -74,5 +83,10 @@
 	<div>Location:<input id="newEventLocation" type="text"></input></div>
 	<div>Details:<input id="newEventDetails" type="text"></input></div>
 	<input type="button" value="Post New Event!" onclick="newEvent()"></input>
+
+	<div>Users in Squad</div>
+	<ul id="users">
+
+	</ul>
 </body>
 </html>
