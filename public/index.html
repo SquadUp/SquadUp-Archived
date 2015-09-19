@@ -30,7 +30,8 @@
 
 		var newEvent = function(){
 			var newEvent = {id: roomCode, time: document.getElementById('newEventTime').value, location: document.getElementById('newEventLocation').value, details: document.getElementById('newEventDetails').value}
-			console.log(newEvent)
+			console.log(newEvent);
+			socket.emit("updateEventDetails",newEvent);
 		}
 
 	</script>

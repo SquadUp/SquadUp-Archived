@@ -19,21 +19,22 @@ io.on("connection", function(socket) {
     console.log(users.length + " users connected");
 
 
-    socket.on("createRoom", function () {
+    socket.on("createRoom", function () { //user wishes to create a room
     	var thisRoomId = Math.floor(Math.random() * 100000);
     	console.log("new room " + thisRoomId);
-    	//push new room to list
+    	//push new room object to list
     	rooms.push({
     		id: thisRoomId,
     		time: 0,
     		location: 0,
+    		leader: this.id,
     		details: "New room without any details"
     	});
 
     	socket.emit('newRoom', thisRoomId);
     });
 
-    socket.on("joinRoom", function (id) {
+    socket.on("joinRoom", function (id) { //user wishes to join a room
     	console.log(this.id + " Request to join room " + id);
     	roomIndex = searchRooms(id)
     	if (roomIndex != -1) { //so long as the room exists
@@ -45,6 +46,20 @@ io.on("connection", function(socket) {
     	else {
     		console.log("Room doesn't exist");
     	}
+    });
+
+    socket.on("updateEventDetails", function (data) { //user wishes to update room details
+    	console.log('validating data');
+		data["leader"] = this.id; //set id field to socket of the user, to verify if leader is correct
+		//once data is validated
+		console.log(this.id + " Request to update details " + data.id);
+		roomIndex = searchRooms(data.id)
+		console.log(data["leader"] + " " + rooms[roomIndex].leader);
+		if (roomIndex != -1 && data["leader"] === rooms[roomIndex].leader) {
+			rooms[roomIndex] = data; //set room data to the user's input
+			console.log(data);
+			io.sockets.in(rooms[roomIndex].id).emit("newEventDetails", rooms[roomIndex]); //emit to all members in room
+		}
     });
 
 
