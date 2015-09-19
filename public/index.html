@@ -31,7 +31,7 @@
 		})
 
 		var sendName = function(){
-			userName = document.getElementById('name').value;
+			userName = document.getElementById("name").value;
 		}
 
 		var createRoom = function(){
@@ -42,7 +42,7 @@
 		}
 
 		var joinRoom = function(){
-			socket.emit("joinRoom", parseInt(document.getElementById('joinRoom').value));
+			socket.emit("joinRoom", {name: userName, roomID: parseInt(document.getElementById('joinRoom').value)});
 			isLeader = false;
 		}
 
@@ -62,7 +62,7 @@
 
 	</script>
 	<div>Name: <input id="name" type="text"></input></div>
-	<input type="button" value="Send Name!" onclick="sendName"></input>
+	<input type="button" value="Send Name!" onclick="sendName()"></input>
 
 	<div></div>
 

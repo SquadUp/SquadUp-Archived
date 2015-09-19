@@ -28,19 +28,25 @@ io.on("connection", function(socket) {
     		time: 0,
     		location: 0,
     		leader: this.id,
-    		details: "New room without any details"
+    		details: "New room without any details",
+    		users: []
     	});
 
     	socket.emit('newRoom', thisRoomId);
     });
 
-    socket.on("joinRoom", function (id) { //user wishes to join a room
-    	console.log(this.id + " Request to join room " + id);
-    	roomIndex = searchRooms(id)
+    socket.on("joinRoom", function (data) { //user wishes to join a room (data object has user's name, and room ID)
+    	console.log(data);
+    	console.log(this.id + " Request to join room " + data.roomID);
+    	roomIndex = searchRooms(data.roomID)
     	if (roomIndex != -1) { //so long as the room exists
-    		this.join(id);
-    		console.log(this.id + " joined room " + id);
+    		this.join(data.roomID);
+    		console.log(this.id + " " + data.name + " joined room " + data.roomID);
     		this.emit("newEventDetails", rooms[roomIndex]);
+    		rooms[roomIndex].users.push({ //when a user joins the room, add them to the list
+    			name: data.name,
+    			location: 0
+    		});
     		console.log(rooms[roomIndex])
     	}
     	else {
@@ -50,13 +56,16 @@ io.on("connection", function(socket) {
 
     socket.on("updateEventDetails", function (data) { //user wishes to update room details
     	console.log('validating data');
-		data["leader"] = this.id; //set id field to socket of the user, to verify if leader is correct
 		//once data is validated
 		console.log(this.id + " Request to update details " + data.id);
 		roomIndex = searchRooms(data.id)
-		console.log(data["leader"] + " " + rooms[roomIndex].leader);
-		if (roomIndex != -1 && data["leader"] === rooms[roomIndex].leader) {
-			rooms[roomIndex] = data; //set room data to the user's input
+		console.log(this.id + " " + rooms[roomIndex].leader);
+		if (roomIndex != -1 && this.id === rooms[roomIndex].leader) {
+			//rooms[roomIndex] = data; //set room data to the user's input
+			//set only a couple of properties for details- member locations, room id #s & etc should not change
+			rooms[roomIndex].time = data.time;
+			rooms[roomIndex].location = data.location;
+			rooms[roomIndex].details = data.details;
 			console.log(data);
 			io.sockets.in(rooms[roomIndex].id).emit("newEventDetails", rooms[roomIndex]); //emit to all members in room
 		}
