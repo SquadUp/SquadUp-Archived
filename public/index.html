@@ -10,28 +10,46 @@
 	<script type="text/javascript">
 		var socket = io();
 		var roomCode;
+		var isLeader;
+		var currentEvent;
 
 		socket.on("newRoom", function(roomNum){
 			console.log(roomNum)
 			roomCode = roomNum;
+			document.getElementById('joinRoom').value = roomCode
 		});
 
 		socket.on("newEventDetails", function(newEventDetails){
+			currentEvent = newEventDetails;
 			roomCode = newEventDetails.id;
+			document.getElementById('joinRoom').value = roomCode
+			document.getElementById('newEventTime').value = newEventDetails.time;
+			document.getElementById('newEventLocation').value = newEventDetails.location;
+			document.getElementById('newEventDetails').value = newEventDetails.details;
 		})
 
 		var createRoom = function(){
 			socket.emit("createRoom");
+			isLeader = true;
 		}
 
 		var joinRoom = function(){
 			socket.emit("joinRoom", parseInt(document.getElementById('joinRoom').value));
+			isLeader = false;
 		}
 
 		var newEvent = function(){
 			var newEvent = {id: roomCode, time: document.getElementById('newEventTime').value, location: document.getElementById('newEventLocation').value, details: document.getElementById('newEventDetails').value}
 			console.log(newEvent);
-			socket.emit("updateEventDetails",newEvent);
+			if(isLeader){
+				socket.emit("updateEventDetails",newEvent);
+				return;
+			}else{
+				document.getElementById('joinRoom').value = roomCode
+				document.getElementById('newEventTime').value = currentEvent.time;
+				document.getElementById('newEventLocation').value = currentEvent.location;
+				document.getElementById('newEventDetails').value = currentEvent.details;
+			}
 		}
 
 	</script>
