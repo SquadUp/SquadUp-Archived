@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<style>
+
+	</style>
 </head>
 <body>
 	<script src="/socket.io/socket.io.js"></script>
 	<script type="text/javascript">
 		var socket = io();
+		var roomCode;
+
+		socket.on("newRoom", function(roomNum){
+			console.log(roomNum)
+			roomCode = roomNum;
+		});
+
+		socket.on("newEventDetails", function(newEventDetails){
+			roomCode = newEventDetails.id;
+		})
+
+		var createRoom = function(){
+			socket.emit("createRoom");
+		}
+
+		var joinRoom = function(){
+			socket.emit("joinRoom", parseInt(document.getElementById('joinRoom').value));
+		}
+
+		var newEvent = function(){
+			var newEvent = {id: roomCode, time: document.getElementById('newEventTime').value, location: document.getElementById('newEventLocation').value, details: document.getElementById('newEventDetails').value}
+			console.log(newEvent)
+		}
+
 	</script>
+	<input type="button" value="Create Room!" onclick="createRoom();"></input>
+
+	<div>Room Code:<input id="joinRoom" type="text" name="Room Code"></input></div>
+	<input id="joinRoomSend" type="button" value="Join Room!" onclick="joinRoom()"></input>
+	<div>Time:<input id="newEventTime" type="text"></input></div>
+	<div>Location:<input id="newEventLocation" type="text"></input></div>
+	<div>Details:<input id="newEventDetails" type="text"></input></div>
+	<input type="button" value="Post New Event!" onclick="newEvent()"></input>
 </body>
 </html>
