@@ -12,11 +12,13 @@
 		var roomCode;
 		var isLeader;
 		var currentEvent;
+		var userName;
 
 		socket.on("newRoom", function(roomNum){
 			console.log(roomNum)
 			roomCode = roomNum;
 			document.getElementById('joinRoom').value = roomCode
+			socket.emit("joinRoom", {name: userName, roomID: roomCode});
 		});
 
 		socket.on("newEventDetails", function(newEventDetails){
@@ -28,9 +30,15 @@
 			document.getElementById('newEventDetails').value = newEventDetails.details;
 		})
 
+		var sendName = function(){
+			userName = document.getElementById('name').value;
+		}
+
 		var createRoom = function(){
-			socket.emit("createRoom");
-			isLeader = true;
+			if(userName !== "undefined"){
+				socket.emit("createRoom");
+				isLeader = true;
+			}
 		}
 
 		var joinRoom = function(){
@@ -53,6 +61,11 @@
 		}
 
 	</script>
+	<div>Name: <input id="name" type="text"></input></div>
+	<input type="button" value="Send Name!" onclick="sendName"></input>
+
+	<div></div>
+
 	<input type="button" value="Create Room!" onclick="createRoom();"></input>
 
 	<div>Room Code:<input id="joinRoom" type="text" name="Room Code"></input></div>
