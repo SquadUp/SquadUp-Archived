@@ -48,6 +48,7 @@ io.on("connection", function(socket) {
     			location: 0
     		});
     		console.log(rooms[roomIndex])
+    		io.sockets.in(rooms[roomIndex].id).emit("newEventDetails", rooms[roomIndex]); //emit to all members in room
     	}
     	else {
     		console.log("Room doesn't exist");
