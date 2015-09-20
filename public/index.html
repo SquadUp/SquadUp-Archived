@@ -89,6 +89,9 @@
 				<input type="text" class="form-control floating-label" placeholder="Event Time" id="newEventTime">
 				<input type="text" class="form-control floating-label" placeholder="Event Location" id="newEventLocation">
 				<button id="neweventbutton" class="btn btn-primary" onclick="newEvent()">Post new event!</button>
+				<p>Destination selection</p>
+				<div id = "location"></div>
+				<div id="map-canvas"></div>
 			</div>
 		</div>
 		<div id="squadusers">
@@ -105,6 +108,7 @@
 	<script src="js/ripples.min.js"></script>
 	<script src="js/sweetalert.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA3U4Vvx9nDRxQvWCQepi-v0nBkhVyl8vk"></script>
 	<script>
 		var socket = io();
 		var roomCode;
@@ -122,6 +126,7 @@
 				$("#createeventdetails").removeClass("hidden");
 			}
 		    $("#cardcontainer").addClass("hidden");
+			initialize();		
 		});
 
 		socket.on("roomname", function(n, d){
@@ -186,6 +191,124 @@
 				return;
 			}
 		};
+
+		//////GOOGLE MAPS STUFF//////
+		function initialize() {
+			function showLocation(position) { //callback called from watchPosition(). Handles map stuff, sends user location to server
+				alert(position.coords.latitude + " " + position.coords.longitude);
+				$("#location").html(position.coords.latitude + " " + position.coords.longitude);
+				mapLocation = { lat: position.coords.latitude, lng: position.coords.longitude};
+
+				updateMarker(userMarker, mapLocation);
+				map.panTo(mapLocation);
+
+				socket.emit("updateUserLocation", {
+					name: userName,
+					location: mapLocation
+				});
+			}
+
+			function errorHandler(err) {
+			    if(err.code == 1) alert("Error: Access is denied!");
+			    else if( err.code == 2) alert("Error: Position is unavailable!");
+			}			
+
+			var oldLat = 42.4276;
+			var oldLng = -71.3048;
+
+
+
+			var mapOptions = {
+				center: new google.maps.LatLng(oldLat,oldLng),
+				zoom: 14
+			}
+
+			// destMap = new google.maps.Map(document.getElementById("dest-canvas"), mapOptions);
+			var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+			var input = document.getElementById('pac-input');
+			var searchBox = new google.maps.places.SearchBox(input);
+			map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+			searchBox.addListener('places_changed', function() {
+				var places = searchBox.getPlaces();
+				console.log(places);
+
+			    if (places.length == 0) {
+			      return;
+			    }
+
+			    //For each place, get the icon, name and location.
+			    var bounds = new google.maps.LatLngBounds();
+			    places.forEach(function(place) {
+			      var icon = {
+			        url: place.icon,
+			        size: new google.maps.Size(71, 71),
+			        origin: new google.maps.Point(0, 0),
+			        anchor: new google.maps.Point(17, 34),
+			        scaledSize: new google.maps.Size(15, 15)
+			      };
+
+			      if (place.geometry.viewport) {
+			        // Only geocodes have viewport.
+			        bounds.union(place.geometry.viewport);
+			      } else {
+			        bounds.extend(place.geometry.location);
+			      }
+			    });
+			    map.fitBounds(bounds);
+			    // var listener = google.maps.event.addListener(map, "idle", function() { 
+			    //   console.log(map.getZoom());
+			    //   //if (map.getZoom() > 14) map.setZoom(14); 
+			    //   google.maps.event.removeListener(listener); 
+			    // });
+			});
+
+			var userMarker = new google.maps.Marker({
+					position: { lat: oldLat, lng: oldLng },
+					map: map
+			});
+			var markers = []; //list of markers on map
+			var destMarker = new google.maps.Marker({
+					position: { lat: oldLat, lng: oldLng},
+					map: map,
+					icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
+			});
+
+			function updateMarker(marker, location) {
+				marker.setPosition(location);
+			}
+			google.maps.event.addListener(map, "click", function (e) {
+				console.log(e.latLng);
+				if (confirm("Would you like to change your destination?")) {
+					updateMarker(destMarker, e.latLng);
+					//TODO: Code for changing destination on server
+					alert("Destination set!");
+					map.panTo(userMarker.getPosition());
+					map.setZoom(14);
+				}
+				else {
+
+				}
+
+				//placeMarker(e.latLng);
+			});
+
+
+			//initialize geolocation
+				
+			if (navigator.geolocation) {
+				//navigator.geolocation.getCurrentPosition(showLocation);
+				navigator.geolocation.watchPosition(showLocation, errorHandler, { timeout: 60000 });
+			}
+			else {
+				$("#location").html("Geolocation not supported");
+			}
+
+		}
+
+
+
 	</script>
 	<script>
 		function setMargins() {
