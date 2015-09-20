@@ -1,0 +1,44 @@
+@font-face {
+  font-family: "And Black";
+  src: url("myfont-webfont.eot?#iefix") format('embedded-opentype'),
+       url("fonts/and_black.woff") format('woff'),
+       url("fonts/and_black.ttf") format('truetype');
+}
+
+html, body, * {
+  margin: 0;
+  padding: 0;
+}
+
+/* Disable ugly boxes around images in IE10 */
+a img{
+  border: 0px;
+}
+
+::-moz-selection {
+  background-color: #6ab344;
+  color: #fff;
+}
+
+::selection {
+  background-color: #6ab344;
+  color: #fff;
+}
+
+#cardcontainer {
+  margin-top: 20px;
+  display: inline-block;
+}
+.navbar > h1 {
+  padding: 10px;
+}
+
+#welcome {
+  width: 75vw;
+  margin-left: 12.5vw;
+  border-radius: 5px;
+}
+
+#welcome-content {
+  padding: 10px;
+}

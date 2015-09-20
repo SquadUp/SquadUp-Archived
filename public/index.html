@@ -1,13 +1,111 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<style>
-
-	</style>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Introducing SquadUp, the best way to meet with your squad.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SquadUp!</title>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/material.min.css">
+	<link rel="stylesheet" href="css/ripples.min.css">
+	<link rel="stylesheet" href="css/material-fullpalette.min.css">
+	<link rel="stylesheet" href="css/roboto.min.css">
+	<link rel="stylesheet" href="css/sweetalert.css">
+	<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+	<div class="navbar navbar-default">
+		<h1>SquadUp</h1>
+	</div>
+	<div class="shadow-z-2" id="welcome">
+		<div id="welcome-content">
+			<h1>Welcome to SquadUp!</h1>
+			<p>
+				SquadUp is a webapp that makes it easier than ever to coordinate events with your friends! To get started, just enter the username you would like to use below.
+			</p>
+			<input type="text" class="form-control floating-label" placeholder="Desired Username" id="name">
+			<button class="btn btn-primary" id="startbutton">
+			  Go!
+			</button>
+		</div>
+			
+	</div>
+	<div id="cardcontainer" class="hidden">
+		<button class="btn btn-primary" data-toggle="modal" data-target="#joinmodal" id="joinbutton">
+		  Join a Squad
+		</button>
+
+		<button class="btn btn-primary" data-toggle="modal" data-target="#createmodal" id="createbutton">
+		  Create a Squad
+		</button>
+	</div>
+
+	<div id="joinmodal" class="modal fade" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header"><h4 class="modal-title">Join a Squad</h4></div>
+	      <div class="modal-body">
+	        <input type="text" class="form-control floating-label" placeholder="Squad ID" id="joinRoom">
+	      </div>
+	      <div class="modal-footer">
+		    	<button id="joinRoomSend" class="btn btn-primary" onclick="joinRoom()">Join Squad!</button>
+		        <button class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+		    </div>
+	     </div>
+		</div>
+	</div>   
+	<div id="createmodal" class="modal fade" tabindex="-1">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header"><h4 class="modal-title">Create a Squad</h4></div>
+	      <div class="modal-body">
+	        <input type="text" class="form-control floating-label" placeholder="Squad Name" id="createRoom">
+	        <input type="text" class="form-control floating-label" placeholder="Squad Description" id="roomdesc">
+	      </div>
+	      <div class="modal-footer">
+		    	<button id="joinRoomSend" class="btn btn-primary" onclick="createRoom()">Create Squad!</button>
+		        <button class="btn btn-primary" data-dismiss="modal">Dismiss</button>
+		    </div>
+	     </div>
+		</div>
+	</div>
+
+	<div class="hidden container" id="squadview">
+		<h3 id="squadname"></h3>
+		<p id="squaddetails"></p>
+		<div id="currenteventdetails">
+			<h3 id="noevent">There is no current event!</h3>
+			<h3 id="eventexists" class="hidden">Current Event:</h3>
+			<h4 id="currenteventname" class="hidden"></h4>
+			<h4 id="currenteventtime" class="hidden"></h4>
+			<button class="btn btn-primary hidden" id="viewmap">View Event on Map</button>
+		</div>
+		<div id="createeventdetails" class="hidden">
+			<h3>Create a new event!</h3>
+			<div class="container">
+				<input type="text" class="form-control floating-label" placeholder="Event Name" id="newEventDetails">
+				<input type="text" class="form-control floating-label" placeholder="Event Time" id="newEventTime">
+				<input type="text" class="form-control floating-label" placeholder="Event Location" id="newEventLocation">
+				<button id="neweventbutton" class="btn btn-primary" onclick="newEvent()">Post new event!</button>
+			</div>
+		</div>
+		<div id="squadusers">
+			<h3>Users in squad</h3>
+			<ul id="users">
+
+			</ul>
+		</div>
+	</div>
+
+	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="js/material.min.js"></script>
+	<script src="js/ripples.min.js"></script>
+	<script src="js/sweetalert.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
-	<script type="text/javascript">
+	<script>
 		var socket = io();
 		var roomCode;
 		var isLeader;
@@ -15,21 +113,39 @@
 		var userName;
 
 		socket.on("newRoom", function(roomNum){
-			console.log(roomNum)
+			console.log(roomNum);
 			roomCode = roomNum;
-			document.getElementById('joinRoom').value = roomCode
-			socket.emit("joinRoom", {name: userName, roomID: roomCode});
+			$('#createmodal').modal('hide');
+			swal({   title: "Squad Created!",   text: "Your squad's ID is " + roomCode + ". Share it with your friends!",   type: "success",   confirmButtonText: "Cool!" });
+			$("#squadview").removeClass("hidden");
+			if (isLeader) {
+				$("#createeventdetails").removeClass("hidden");
+			}
+		    $("#cardcontainer").addClass("hidden");
+		});
+
+		socket.on("roomname", function(n, d){
+			$("#squadname").text(n);
+			$("#squaddetails").text(d);
 		});
 
 		socket.on("newEventDetails", function(newEventDetails){
 			currentEvent = newEventDetails;
 			roomCode = newEventDetails.id;
-			document.getElementById('joinRoom').value = roomCode
-			document.getElementById('newEventTime').value = newEventDetails.time;
-			document.getElementById('newEventLocation').value = newEventDetails.location;
-			document.getElementById('newEventDetails').value = newEventDetails.details;
+		    $("#noevent").addClass("hidden");
+		    $("#currenteventname").text(currentEvent.details);
+		    $("#currenteventtime").text(currentEvent.time);
+		    $("#eventexists").removeClass("hidden");
+		    $("#currenteventname").removeClass("hidden");
+		    $("#currenteventtime").removeClass("hidden");
+		    $("#viewmap").removeClass("hidden");
 			updateUsers();
-		})
+		});
+
+		socket.on("usernames", function(newEventDetails){
+			currentEvent = newEventDetails;
+			updateUsers();
+		});
 
 		var updateUsers = function(){
 			for(var i = document.getElementById('users').children.length; i < currentEvent.users.length; i++){
@@ -37,56 +153,65 @@
 				listItem.innerHTML = currentEvent.users[i].name;
 				document.getElementById('users').appendChild(listItem);
 			}
-		}
+		};
 
 		var sendName = function(){
 			userName = document.getElementById("name").value;
-		}
+		};
 
 		var createRoom = function(){
-			if(userName !== "undefined"){
-				socket.emit("createRoom");
+			var roomname = document.getElementById("createRoom").value;
+			var roomdesc = document.getElementById("roomdesc").value;
+			if(userName !== undefined && roomname !== "" && roomdesc !== ""){
+				socket.emit("createRoom", roomname, roomdesc, userName);
 				isLeader = true;
 			}
-		}
+		};
 
 		var joinRoom = function(){
 			socket.emit("joinRoom", {name: userName, roomID: parseInt(document.getElementById('joinRoom').value)});
+			$('#joinmodal').modal('hide');
+			$("#squadview").removeClass("hidden");
+		    $("#cardcontainer").addClass("hidden");
+		    swal({   title: "You're In!",   text: "Welcome to the squad!",   type: "success",   confirmButtonText: "Cool!" });
 			isLeader = false;
-		}
+		};
 
 		var newEvent = function(){
-			var newEvent = {id: roomCode, time: document.getElementById('newEventTime').value, location: document.getElementById('newEventLocation').value, details: document.getElementById('newEventDetails').value}
+			var newEvent = {id: roomCode, time: document.getElementById('newEventTime').value, location: document.getElementById('newEventLocation').value, details: document.getElementById('newEventDetails').value};
 			console.log(newEvent);
 			if(isLeader){
 				socket.emit("updateEventDetails",newEvent);
+				swal({   title: "Event Created!",   text: "Squad Up!",   type: "success",   confirmButtonText: "Swag!" });
 				return;
-			}else{
-				document.getElementById('joinRoom').value = roomCode
-				document.getElementById('newEventTime').value = currentEvent.time;
-				document.getElementById('newEventLocation').value = currentEvent.location;
-				document.getElementById('newEventDetails').value = currentEvent.details;
 			}
+		};
+	</script>
+	<script>
+		function setMargins() {
+		    width = $(window).width();
+		    containerWidth = $("#cardcontainer").width();
+		    leftMargin = (width-containerWidth)/2;    
+		    $("#cardcontainer").css("marginLeft", leftMargin);
 		}
 
+		$(document).ready(function() {
+		    setMargins();
+		    $(window).resize(function() {
+		        setMargins();
+		    });
+
+		    $("#startbutton").click(function(){
+		    	if ($("#name").val() === "" || $("#name").val() === null) {
+		    		swal({   title: "Error!",   text: "You need to have a username!",   type: "error",   confirmButtonText: "Okay" });
+		    	} else {
+		    		$("#cardcontainer").removeClass("hidden");
+		    		$("#welcome").addClass("hidden");
+		    		setMargins();
+		    		sendName();
+		    	}
+		    });
+		});
 	</script>
-	<div>Name: <input id="name" type="text"></input></div>
-	<input type="button" value="Send Name!" onclick="sendName()"></input>
-
-	<div></div>
-
-	<input type="button" value="Create Room!" onclick="createRoom();"></input>
-
-	<div>Room Code:<input id="joinRoom" type="text" name="Room Code"></input></div>
-	<input id="joinRoomSend" type="button" value="Join Room!" onclick="joinRoom()"></input>
-	<div>Time:<input id="newEventTime" type="text"></input></div>
-	<div>Location:<input id="newEventLocation" type="text"></input></div>
-	<div>Details:<input id="newEventDetails" type="text"></input></div>
-	<input type="button" value="Post New Event!" onclick="newEvent()"></input>
-
-	<div>Users in Squad</div>
-	<ul id="users">
-
-	</ul>
 </body>
 </html>
