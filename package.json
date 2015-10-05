@@ -1,17 +1,22 @@
 {
-  "name": "SquadUp-Server",
-  "version": "0.0.0",
-  "private": true,
+  "name": "squadup-server",
+  "version": "2.0.0",
+  "description": "SquadUp server",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./bin/www"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SquadUp/SquadUp-Server.git"
+  },
+  "author": "SquadUp Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SquadUp/SquadUp-Server/issues"
+  },
+  "homepage": "https://github.com/SquadUp/SquadUp-Server#readme",
   "dependencies": {
-    "body-parser": "~1.13.2",
-    "cookie-parser": "~1.3.5",
-    "debug": "~2.2.0",
-    "express": "~4.13.1",
-    "jade": "~1.11.0",
-    "morgan": "~1.6.1",
-    "serve-favicon": "~2.3.0"
+    "orm": "^2.1.27"
   }
 }
