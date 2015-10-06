@@ -10,4 +10,6 @@ module.exports = function(sequelize) {
         token    : { type: sequelize.STRING , allowNull: false, unique: true },
         expiresOn: { type: sequelize.DATE   , allowNull: false }
     });
+
+    return ApiToken;
 };
