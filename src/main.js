@@ -41,3 +41,5 @@ var Payment = rek("src/models/Payment")(sequelize);
 var Poll = rek("src/models/Poll")(sequelize);
 var PollOption = rek("src/models/PollOption")(sequelize);
 var PoleVote = rek("src/models/PoleVote")(sequelize);
+
+sequelize.sync();
