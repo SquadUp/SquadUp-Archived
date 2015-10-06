@@ -19,6 +19,9 @@
   "homepage": "https://github.com/SquadUp/SquadUp-Server#readme",
   "dependencies": {
     "orm": "^2.1.27",
-    "rekuire": "^0.1.9"
+    "pg": "^4.4.2",
+    "pg-hstore": "^2.3.2",
+    "rekuire": "^0.1.9",
+    "sequelize": "^3.11.0"
   }
 }
