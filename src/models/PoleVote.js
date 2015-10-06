@@ -7,7 +7,7 @@ module.exports = function(sequelize) {
         timestamps: false,
 
         poleId: { type: Sequelize.INTEGER, allowNull: false },
-        userIdL { type: Sequelize.INTEGER, allowNull: false }
+        userId: { type: Sequelize.INTEGER, allowNull: false }
     });
 
     return PoleVote;
