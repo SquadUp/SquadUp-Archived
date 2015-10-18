@@ -1,0 +1,7 @@
+{
+    "name": "SquadUp-Server",
+    "description": "SquadUp server",
+    "repository": "https://github.com/SquadUp/SquadUp-Server",
+    "logo": "https://raw.githubusercontent.com/SquadUp/SquadUp-Assets/master/logo/exported/logo-black.png",
+    "image": "heroku/nodejs"
+}
