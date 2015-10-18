@@ -24,22 +24,22 @@ var sequelize = new Sequelize(config.database.database,
 
 // Project Require
 // -- Models
-var User = rek("src/models/User")(sequelize);
-var ApiToken = rek("src/models/ApiToken")(sequelize);
+var User = rek("src/models/user")(sequelize);
+var ApiToken = rek("src/models/api-token")(sequelize);
 
-var Squad = rek("src/models/Squad")(sequelize);
-var SquadMembership = rek("src/models/SquadMembership")(sequelize);
+var Squad = rek("src/models/squad")(sequelize);
+var SquadMembership = rek("src/models/squad-membership")(sequelize);
 
-var Car = rek("src/models/Car")(sequelize);
+var Car = rek("src/models/car")(sequelize);
 
-var Event = rek("src/models/Event")(sequelize);
-var EventRSVP = rek("src/models/EventRSVP")(sequelize);
+var Event = rek("src/models/event")(sequelize);
+var EventRSVP = rek("src/models/event-rsvp")(sequelize);
 
-var Location = rek("src/models/Location")(sequelize);
-var Payment = rek("src/models/Payment")(sequelize);
+var Location = rek("src/models/location")(sequelize);
+var Payment = rek("src/models/payment")(sequelize);
 
-var Poll = rek("src/models/Poll")(sequelize);
-var PollOption = rek("src/models/PollOption")(sequelize);
-var PoleVote = rek("src/models/PoleVote")(sequelize);
+var Poll = rek("src/models/poll")(sequelize);
+var PollOption = rek("src/models/poll-option")(sequelize);
+var PoleVote = rek("src/models/pole-vote")(sequelize);
 
 sequelize.sync();

@@ -5,7 +5,7 @@ var Sequelize = require("sequelize");
 var rek = require("rekuire");
 
 // Project Require
-var PermissionLevel = rek("src/enums/PermissionLevel");
+var PermissionLevel = rek("src/enums/permission-level");
 
 module.exports = function(sequelize) {
     var SquadMembership = sequelize.define("SquadMembership", {

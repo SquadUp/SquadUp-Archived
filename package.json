@@ -1,27 +1,30 @@
 {
-  "name": "squadup-server",
-  "version": "2.0.0",
-  "description": "SquadUp server",
-  "main": "src/main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/main.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SquadUp/SquadUp-Server.git"
-  },
-  "author": "SquadUp Team",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/SquadUp/SquadUp-Server/issues"
-  },
-  "homepage": "https://github.com/SquadUp/SquadUp-Server#readme",
-  "dependencies": {
-    "orm": "^2.1.27",
-    "pg": "^4.4.2",
-    "pg-hstore": "^2.3.2",
-    "rekuire": "^0.1.9",
-    "sequelize": "^3.11.0"
-  }
+    "name": "squadup-server",
+    "version": "2.0.0",
+    "description": "SquadUp server",
+    "main": "src/main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node src/main.js",
+        "statsd": "node node_modules/statsd/stats.js statsd-config.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SquadUp/SquadUp-Server.git"
+    },
+    "author": "SquadUp Team",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/SquadUp/SquadUp-Server/issues"
+    },
+    "homepage": "https://github.com/SquadUp/SquadUp-Server#readme",
+    "dependencies": {
+        "lynx": "^0.2.0",
+        "orm": "^2.1.27",
+        "pg": "^4.4.2",
+        "pg-hstore": "^2.3.2",
+        "rekuire": "^0.1.9",
+        "sequelize": "^3.11.0",
+        "statsd": "^0.7.2"
+    }
 }
