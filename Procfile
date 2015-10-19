@@ -1,2 +1,2 @@
 web: npm start
-statsd: npm statsd
+statsd: npm run-script statsd

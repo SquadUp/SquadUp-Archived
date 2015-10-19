@@ -8,19 +8,19 @@ var rek = require("rekuire");
 var Sequelize = require("sequelize");
 
 // Configure
-if(!fs.existsSync("src/config.js")) {
+if (!fs.existsSync("src/config.js")) {
     throw "Can not start without \"src/config.js\" file";
 }
 
 var config = rek("src/config");
 
 var sequelize = new Sequelize(config.database.database,
-                              config.database.user,
-                              config.database.password,
-                              {
-                                    host: config.database.host,
-                                    dialect: "postgres"
-                              });
+    config.database.user,
+    config.database.password,
+    {
+        host: config.database.host,
+        dialect: "postgres"
+    });
 
 // Project Require
 // -- Models

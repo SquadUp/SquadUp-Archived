@@ -1,15 +1,18 @@
 "use strict";
 
+// NPM Require
 var Sequelize = require("sequelize");
+var rek = require("rekuire");
 
-module.exports = function(sequelize) {
+// Project Require
+var CommonDatabaseConfig = rek("src/models/common-database-config");
+
+module.exports = function (sequelize) {
     var Payment = sequelize.define("Payment", {
-        timestamps: false,
-
-        toUserId  : { type: Sequelize.INTEGER, allowNull: false },
-        fromUserId: { type: Sequelize.INTEGER, allowNull: false },
-        ammount   : { type: Sequelize.INTEGER, allowNull: false }
-    });
+        to_user_id: {type: Sequelize.INTEGER, allowNull: false},
+        from_user_id: {type: Sequelize.INTEGER, allowNull: false},
+        amount: {type: Sequelize.INTEGER, allowNull: false}
+    }, CommonDatabaseConfig("payments"));
 
     return Payment;
 };

@@ -1,17 +1,20 @@
 "use strict";
 
+// NPM Require
 var Sequelize = require("sequelize");
+var rek = require("rekuire");
 
-module.exports = function(sequelize) {
+// Project Require
+var CommonDatabaseConfig = rek("src/models/common-database-config");
+
+module.exports = function (sequelize) {
     var User = sequelize.define("User", {
-        timestamps: false,
-
-        email     : { type: Sequelize.STRING , allowNull: false, unique: true },
-        firstName : { type: Sequelize.STRING , allowNull: false },
-        lastName  : { type: Sequelize.STRING , allowNull: false },
-        avatarUri : { type: Sequelize.STRING , allowNull: false },
-        locationId: { type: Sequelize.INTEGER, allowNull: false }
-    });
+        email: {type: Sequelize.STRING, allowNull: false, unique: true},
+        first_name: {type: Sequelize.STRING, allowNull: false},
+        last_name: {type: Sequelize.STRING, allowNull: false},
+        avatar_uri: {type: Sequelize.STRING, allowNull: false},
+        location_id: {type: Sequelize.INTEGER, allowNull: false}
+    }, CommonDatabaseConfig("users"));
 
     return User;
 };

@@ -5,17 +5,18 @@ var Sequelize = require("sequelize");
 var rek = require("rekuire");
 
 // Project Require
+var CommonDatabaseConfig = rek("src/models/common-database-config");
 var PermissionLevel = rek("src/enums/permission-level");
 
-module.exports = function(sequelize) {
+module.exports = function (sequelize) {
     var SquadMembership = sequelize.define("SquadMembership", {
-        timestamps: false,
-
-        squadId   : { type: Sequelize.INTEGER, allowNull: false },
-        userId    : { type: Sequelize.INTEGER, allowNull: false },
-        permission: { type: Sequelize.ENUM(
-                                            PermissionLevel.ADMIN,
-                                            PermissionLevel.USER),
-                                               allowNull: false }
-    });
+        squad_id: {type: Sequelize.INTEGER, allowNull: false},
+        user_id: {type: Sequelize.INTEGER, allowNull: false},
+        permission: {
+            type: Sequelize.ENUM(
+                PermissionLevel.ADMIN,
+                PermissionLevel.USER),
+            allowNull: false
+        }
+    }, CommonDatabaseConfig("squad_memberships"));
 };

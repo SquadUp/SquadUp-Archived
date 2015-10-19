@@ -1,15 +1,18 @@
 "use strict";
 
+// NPM Require
 var Sequelize = require("sequelize");
+var rek = require("rekuire");
 
-module.exports = function(sequelize) {
+// Project Require
+var CommonDatabaseConfig = rek("src/models/common-database-config");
+
+module.exports = function (sequelize) {
     var Squad = sequelize.define("Squad", {
-        timestamps: false,
-
-        name       : { type: Sequelize.STRING, allowNull: false },
-        description: { type: Sequelize.STRING, allowNull: true },
-        avatarUri  : { type: Sequelize.STRING, allowNull: false }
-    });
+        name: {type: Sequelize.STRING, allowNull: false},
+        description: {type: Sequelize.STRING, allowNull: true},
+        avatar_uri: {type: Sequelize.STRING, allowNull: false}
+    }, CommonDatabaseConfig("squads"));
 
     return Squad;
 };

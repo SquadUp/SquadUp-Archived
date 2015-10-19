@@ -4,7 +4,7 @@
     "description": "SquadUp server",
     "main": "src/main.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "istanbul cover --include-all-sources -x spec/*.js -x spec/**/*.js  -- jasmine",
         "start": "node src/main.js",
         "statsd": "node node_modules/statsd/stats.js statsd-config.json"
     },
@@ -26,5 +26,9 @@
         "rekuire": "^0.1.9",
         "sequelize": "^3.11.0",
         "statsd": "^0.7.2"
+    },
+    "devDependencies": {
+        "istanbul": "^0.4.0",
+        "jasmine": "^2.3.2"
     }
 }
