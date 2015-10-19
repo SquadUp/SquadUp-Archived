@@ -14,6 +14,12 @@ script:
 # after_script:
 #    - codeclimate-test-reporter < coverage/lcov.info
 
+# Notifications
+notifications:
+  slack:
+    secure: hCvSc1lvEkTubk92GaeVpukveXGc9szjvtCovCE5jgyccVlhni25GJHFkJri/kQjOC397hInnc89sJRtmPG8qyOGWX0/MevnBo+CaI6XO18xyl6wA/zJF0MstKWV748W3/OSTJtjad3NhY5RLOSRxxpHWg+YlnwWEkpbnoxX3Lvwpbb+Qxqe81iG+56pmahFiWKmOjBaYCrJF3/e4QXV8fAacwSCP+rWZOJVEJwtoHqWZbIXjMGdCNQayaGzi2oNyK9LmDuRl2+/TIodL2ruLsxSOGXiUFhnlZ7/oe1V8xDq01HdUbv5J9Zgn9kw6NDlz/E8etrczH4Ma25ChR/ap2+OEwawvVUokwBc9pg6SQt8SeMD7UAGXm1m9kcLToQVDYPPw8r0DGS1RZB+b71sLuagakv96m7MEIShkDwLaCYXJVHvX8DbexInFw1DIfpFUDuujby+R8IYu8n8w+9cq4gialkMwcpfQc3mP6x/FoDXvpJSt0SKTsX9nGu7Zh6mlHsU5Mq2bvE37gbOcOK7bfqNbPTp+QUVj54MJqlh9gFuLqK84EPP2iYYI/1gvxpXjzU6ljGEYALbsXUcYMDpmKqRreUCUlblOCQGZzHdl+ZTtAOOhLI0+e5/cGKHHwFk5Xi9Mz6wArAv+Xo1YLIdciYkW8jl2UhxcKNWH4LETNs=
+
+
 # Addons
 # addons:
 #     code_climate:
