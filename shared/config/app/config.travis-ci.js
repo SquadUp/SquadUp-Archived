@@ -1,13 +1,9 @@
 "use strict";
 
 /**
- * INSTRUCTIONS:
- *      Duplicate this file and name the copy `config.js`. Then change any
- *      values in the config variable
- *
  * WARNING:
- *      DO not modify this file, it is here as a template for future developers,
- *      anything put in this file will be committed to public source control
+ *      This file is only for CI testing use and will be committed to a public
+ *      git repo.
  */
 
 // NPM Require
@@ -42,10 +38,10 @@ var config = {
 
     test: {
         database: {
-            host: "",
-            user: "",
+            host: "127.0.0.1",
+            user: "postgres",
             password: "",
-            database: ""
+            database: "squadup"
         }
     },
 
