@@ -2,3 +2,12 @@
 
 # SquadUp-Server
 SquadUp server
+
+# Configuration
+## App
+Open the
+
+## StatsD
+Open the StatsD configuration file `shared/config/statsd/statsd-config.json`
+
+Fill in the appropriate configuration values

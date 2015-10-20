@@ -8,11 +8,7 @@ var rek = require("rekuire");
 var Sequelize = require("sequelize");
 
 // Configure
-if (!fs.existsSync("src/config.js")) {
-    throw "Can not start without \"src/config.js\" file";
-}
-
-var config = rek("src/config");
+var config = rek("shared/config/app/get-config");
 
 var sequelize = new Sequelize(config.database.database,
     config.database.user,

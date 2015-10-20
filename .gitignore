@@ -1,5 +1,5 @@
 node_modules
 npm-debug.log
 .idea
-src/config.js
+shared/config/app/config.js
 coverage

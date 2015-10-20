@@ -9,16 +9,16 @@ node_js:
 # Test
 script:
     - npm test
-# after_script:
-#    - codeclimate-test-reporter < coverage/lcov.info
+after_script:
+    - codeclimate-test-reporter < coverage/lcov.info
 
 # Notifications
 notifications:
   slack:
     secure: hCvSc1lvEkTubk92GaeVpukveXGc9szjvtCovCE5jgyccVlhni25GJHFkJri/kQjOC397hInnc89sJRtmPG8qyOGWX0/MevnBo+CaI6XO18xyl6wA/zJF0MstKWV748W3/OSTJtjad3NhY5RLOSRxxpHWg+YlnwWEkpbnoxX3Lvwpbb+Qxqe81iG+56pmahFiWKmOjBaYCrJF3/e4QXV8fAacwSCP+rWZOJVEJwtoHqWZbIXjMGdCNQayaGzi2oNyK9LmDuRl2+/TIodL2ruLsxSOGXiUFhnlZ7/oe1V8xDq01HdUbv5J9Zgn9kw6NDlz/E8etrczH4Ma25ChR/ap2+OEwawvVUokwBc9pg6SQt8SeMD7UAGXm1m9kcLToQVDYPPw8r0DGS1RZB+b71sLuagakv96m7MEIShkDwLaCYXJVHvX8DbexInFw1DIfpFUDuujby+R8IYu8n8w+9cq4gialkMwcpfQc3mP6x/FoDXvpJSt0SKTsX9nGu7Zh6mlHsU5Mq2bvE37gbOcOK7bfqNbPTp+QUVj54MJqlh9gFuLqK84EPP2iYYI/1gvxpXjzU6ljGEYALbsXUcYMDpmKqRreUCUlblOCQGZzHdl+ZTtAOOhLI0+e5/cGKHHwFk5Xi9Mz6wArAv+Xo1YLIdciYkW8jl2UhxcKNWH4LETNs=
 
-
 # Addons
-# addons:
-#     code_climate:
-#         repo_token: TODO
+addons:
+    code_climate:
+        repo_token:
+            secure: "D4bDanjwfJr83lOqf+qe9Fbpz2mncg2sYFKYvEg9sNxUge4rYZY60fR2FidnvkEpbrQwfFZJq0D+OVO4KjWpMhNg4d01dPvHsy8FaeUbaqf0zkif7Ll1MjaljXR2Z85JX17CSJzGJsxuKWJNfpKbCTKFvluy8/nY4q4fjeESs89a4ggDFP8vvVS/cVm1eAHnIHXM4oILIq1hGSlfOL9UT95AFIWcPJYdyhvB/AZIe0RI01D/2ITsZHZybEjpni1QIxYzu4BVBwPmX1be/ahcRG7YWg1WsyZXHjWNwzOhf0NLdRLykUzJRBlftY4Gy+QU+muKxQYynN7sJDfViZwL0LTQmgp18FAqrXiMvuf56J1yYhxGev4B8tcquHcM5wIZEaf4F5UTApmuKocHY+QbCr6SxMZQBbMFBs47cinZPJSpy5GUbEydlr+OKQB08tvqojr85UZCEDmZ9gaPbxkVDa7+yO1Q27/i0nUaPmacFP8EQowboUL86aC6ZK9knfZdkUkcs7p/qA5jag6cgQqckhpQpSWvZ/x+hGgjGnK+y0Ck1QidNe+cbL4AL+ysCga9Dg3cYHQOYSuDI7UqtWjeviljCmOMSnMlk0THouuG8dFP3RiN5ixK77lKaeOUEokV8BWe55GVUEGSCSm6QxNRvdv4mrlzRznfeZEQ49lY4nU="
