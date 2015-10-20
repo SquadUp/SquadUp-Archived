@@ -5,7 +5,8 @@ SquadUp server
 
 # Configuration
 ## App
-Open the
+Open the example config file `shared/config/app/config.example.js` and follow
+the intructions at the top
 
 ## StatsD
 Open the StatsD configuration file `shared/config/statsd/statsd-config.json`

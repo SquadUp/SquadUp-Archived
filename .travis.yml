@@ -7,6 +7,8 @@ node_js:
     - "4.2.1"
 
 # Test
+before_script:
+    - psql -c 'create database squadup;' -U postgres
 script:
     - npm test
 after_script:
@@ -22,3 +24,5 @@ addons:
     code_climate:
         repo_token:
             secure: "D4bDanjwfJr83lOqf+qe9Fbpz2mncg2sYFKYvEg9sNxUge4rYZY60fR2FidnvkEpbrQwfFZJq0D+OVO4KjWpMhNg4d01dPvHsy8FaeUbaqf0zkif7Ll1MjaljXR2Z85JX17CSJzGJsxuKWJNfpKbCTKFvluy8/nY4q4fjeESs89a4ggDFP8vvVS/cVm1eAHnIHXM4oILIq1hGSlfOL9UT95AFIWcPJYdyhvB/AZIe0RI01D/2ITsZHZybEjpni1QIxYzu4BVBwPmX1be/ahcRG7YWg1WsyZXHjWNwzOhf0NLdRLykUzJRBlftY4Gy+QU+muKxQYynN7sJDfViZwL0LTQmgp18FAqrXiMvuf56J1yYhxGev4B8tcquHcM5wIZEaf4F5UTApmuKocHY+QbCr6SxMZQBbMFBs47cinZPJSpy5GUbEydlr+OKQB08tvqojr85UZCEDmZ9gaPbxkVDa7+yO1Q27/i0nUaPmacFP8EQowboUL86aC6ZK9knfZdkUkcs7p/qA5jag6cgQqckhpQpSWvZ/x+hGgjGnK+y0Ck1QidNe+cbL4AL+ysCga9Dg3cYHQOYSuDI7UqtWjeviljCmOMSnMlk0THouuG8dFP3RiN5ixK77lKaeOUEokV8BWe55GVUEGSCSm6QxNRvdv4mrlzRznfeZEQ49lY4nU="
+
+    postgresql: "9.3"
