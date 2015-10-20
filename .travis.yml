@@ -10,6 +10,7 @@ node_js:
 before_script:
     - psql -c 'create database squadup;' -U postgres
     - mv ./shared/config/app/config.travis-ci.js ./shared/config/app/config.js
+    - npm install -g codeclimate-test-reporter
 script:
     - npm test
 after_script:
