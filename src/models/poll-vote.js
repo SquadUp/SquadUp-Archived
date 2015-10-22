@@ -8,10 +8,10 @@ var rek = require("rekuire");
 var CommonDatabaseConfig = rek("src/models/common-database-config");
 
 module.exports = function (sequelize) {
-    var PoleVote = sequelize.define("PoleVote", {
-        pole_id: {type: Sequelize.INTEGER, allowNull: false},
+    var PollVote = sequelize.define("PollVote", {
+        poll_id: {type: Sequelize.INTEGER, allowNull: false},
         user_id: {type: Sequelize.INTEGER, allowNull: false}
-    }, CommonDatabaseConfig("pole_votes"));
+    }, CommonDatabaseConfig("poll_votes"));
 
-    return PoleVote;
+    return PollVote;
 };

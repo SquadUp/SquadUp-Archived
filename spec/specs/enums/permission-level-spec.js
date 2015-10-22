@@ -8,7 +8,7 @@ var PermissionLevel = rek("src/enums/permission-level");
 
 describe("PermissionLevel Enum", function () {
     it("has 2 values", function () {
-        expect(Object.keys(PermissionLevel).length).toBe(2);
+        expect(Object.keys(PermissionLevel).length).toEqual(2);
     });
 
     describe("#ADMIN", function () {
@@ -17,7 +17,7 @@ describe("PermissionLevel Enum", function () {
         });
 
         it("is a string", function() {
-            expect(PermissionLevel.ADMIN).toBe("ADMIN");
+            expect(PermissionLevel.ADMIN).toEqual("ADMIN");
         });
     });
 
@@ -27,7 +27,7 @@ describe("PermissionLevel Enum", function () {
         });
 
         it("is a string", function() {
-            expect(PermissionLevel.USER).toBe("USER");
+            expect(PermissionLevel.USER).toEqual("USER");
         });
     });
 });

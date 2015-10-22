@@ -19,4 +19,6 @@ module.exports = function (sequelize) {
             allowNull: false
         }
     }, CommonDatabaseConfig("squad_memberships"));
+
+    return SquadMembership;
 };
