@@ -1,3 +1,3 @@
-# [![Build Status](https://travis-ci.org/SquadUp/SquadUp-Server.svg)](https://travis-ci.org/SquadUp/SquadUp-Server)
-# SquadUp-Server
-SquadUp server
+# SquadUp
+
+The original SquadUp project created for LexHack 2015.
